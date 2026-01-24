@@ -2,12 +2,14 @@
   "name": "nextjs-tailwind",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "bunx tsc --noEmit && next lint",
-    "format": "bunx biome format --write"
+    "lint": "next lint"
   },
   "dependencies": {
     "@sanity/image-url": "^2.0.3",
