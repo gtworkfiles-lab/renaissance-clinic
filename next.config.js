@@ -1,15 +1,13 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   typescript: {
-    // Ми дозволяємо збірку, навіть якщо є помилки TypeScript
+    // Ігноруємо помилки TypeScript (ті самі useEffectEvent), щоб білд пройшов
     ignoreBuildErrors: true,
   },
   eslint: {
-    // Ми ігноруємо помилки лінтера під час збірки
+    // Ігноруємо помилки лінтера
     ignoreDuringBuilds: true,
   },
-  // Це дозволить Sanity працювати стабільно
   images: {
     remotePatterns: [
       {
@@ -20,4 +18,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
