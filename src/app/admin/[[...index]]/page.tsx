@@ -1,6 +1,6 @@
 'use client';
 
-import { NextStudio } from 'sanity/next-studio';
+import { NextStudio } from 'next-sanity/studio'; // Виправлено шлях тут
 import config from '../../../../sanity.config';
 
 export default function AdminPage() {
