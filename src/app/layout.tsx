@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Renesans Center - Rehabilitation & Medical Services",
+  title: "Renaissance Clinic - Official Site",
   description: "Professional rehabilitation services. Your path to recovery starts here.",
 };
 
