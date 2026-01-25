@@ -23,7 +23,7 @@ export default function Home() {
       if (data && data.faq) {
         data.faq = data.faq.map((item: any) => 
           item.question.includes("триває курс") 
-            ? { ...item, answer: "Рекомендований курс для стабільного результату — від 3 місяців." }
+            ? { ...item, answer: "Рекомендований курс для стабільного результату і відновлення — від 3 місяців." }
             : item
         );
       }
