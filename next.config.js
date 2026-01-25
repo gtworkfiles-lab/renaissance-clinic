@@ -1,46 +1,23 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Дозволяємо збірку попри помилки (те, що просив Vercel)
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   typescript: {
+    // Ми дозволяємо збірку, навіть якщо є помилки TypeScript
     ignoreBuildErrors: true,
   },
-  
-  // Ваші існуючі налаштування
-  allowedDevOrigins: ["*.preview.same-app.com"],
+  eslint: {
+    // Ми ігноруємо помилки лінтера під час збірки
+    ignoreDuringBuilds: true,
+  },
+  // Це дозволить Sanity працювати стабільно
   images: {
-    unoptimized: true,
-    domains: [
-      "source.unsplash.com",
-      "images.unsplash.com",
-      "ext.same-assets.com",
-      "ugc.same-assets.com",
-    ],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ext.same-assets.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ugc.same-assets.com",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
       },
     ],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
