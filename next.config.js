@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 1. Вмикаємо статичний експорт
-  output: 'export',
+  // output: 'export', <-- МИ ЦЕ ВИДАЛИЛИ, щоб працювала відправка листів
 
-  // 2. Вимикаємо оптимізацію зображень (вона не працює без Node.js сервера)
   images: {
-    unoptimized: true,
+    // unoptimized можна залишити true або видалити, Vercel підтримує оптимізацію
+    unoptimized: true, 
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,12 +14,12 @@ const nextConfig = {
   },
 
   typescript: {
-    // Ігноруємо помилки TypeScript, щоб білд пройшов
+    // Ігноруємо помилки TypeScript, щоб білд пройшов без затримок
     ignoreBuildErrors: true,
   },
 
   eslint: {
-    // Ігноруємо помилки лінтера
+    // Ігноруємо помилки лінтера для швидкості білду
     ignoreDuringBuilds: true,
   },
 };
