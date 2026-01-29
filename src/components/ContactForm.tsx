@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import InputMask from 'react-input-mask';
+import { PatternFormat } from 'react-number-format'; // Нова бібліотека
 
 export function ContactForm({ content }: { content: any }) {
   const [status, setStatus] = useState<string | null>(null);
@@ -29,37 +29,28 @@ export function ContactForm({ content }: { content: any }) {
       if (response.ok && result.success) {
         setStatus("Дякуємо! Ми зв'яжемося з вами найближчим часом.");
       } else {
-        setStatus("Сталася помилка. Спробуйте ще раз або зателефонуйте нам.");
+        setStatus("Сталася помилка. Спробуйте ще раз.");
       }
     } catch (error) {
-      setStatus("Помилка з'єднання. Перевірте інтернет.");
+      setStatus("Помилка з'єднання.");
     } finally {
       setLoading(false);
     }
   };
-
-  const title = content?.title || "Потрібна допомога?";
-  const subtitle = content?.subtitle || "Залиште заявку для анонімної консультації";
-  const buttonText = content?.buttonText || "Замовити консультацію";
 
   return (
     <section id="callback" className="py-24 bg-teal-50">
       <div className="max-w-4xl mx-auto px-4">
         <div className="bg-white rounded-[40px] p-8 md:p-16 shadow-xl border border-teal-100">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{title}</h2>
-            <p className="text-gray-600">{subtitle}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{content?.title || "Потрібна допомога?"}</h2>
+            <p className="text-gray-600">{content?.subtitle || "Залиште заявку"}</p>
           </div>
 
           {status ? (
-            <div className={`p-6 rounded-2xl text-center font-bold ${status.includes('Дякуємо') ? 'bg-teal-100 text-teal-800' : 'bg-red-100 text-red-800'}`}>
+            <div className="p-6 rounded-2xl text-center font-bold bg-teal-100 text-teal-800">
               {status}
-              <button 
-                onClick={() => setStatus(null)} 
-                className="block mx-auto mt-4 text-sm underline opacity-70"
-              >
-                Надіслати ще раз
-              </button>
+              <button onClick={() => setStatus(null)} className="block mx-auto mt-4 text-sm underline opacity-70">Надіслати ще раз</button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,13 +62,13 @@ export function ContactForm({ content }: { content: any }) {
                 className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" 
               />
               
-              {/* Поле з маскою */}
-              <InputMask
-                mask="+38 (099) 999-99-99"
+              {/* НОВА МАСКА ТУТ */}
+              <PatternFormat
+                format="+38 (0##) ### ## ##"
+                allowEmptyFormatting
+                mask="_"
                 name="phone"
-                type="tel"
                 required
-                placeholder="+38 (0__) ___-__-__"
                 className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black"
               />
 
@@ -86,7 +77,7 @@ export function ContactForm({ content }: { content: any }) {
                 disabled={loading}
                 className={`md:col-span-2 py-5 text-white font-bold rounded-2xl shadow-lg transition-all ${loading ? 'bg-gray-400' : 'bg-teal-600 hover:bg-teal-700'}`}
               >
-                {loading ? "Відправляємо..." : buttonText}
+                {loading ? "Відправляємо..." : content?.buttonText || "Замовити консультацію"}
               </button>
             </form>
           )}
