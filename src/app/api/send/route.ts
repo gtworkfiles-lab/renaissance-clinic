@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       from: 'Reabilitacia Site <onboarding@resend.dev>',
-      to: ['sereg...gmail.com'], // ВПИШІТЬ СЮДИ ВАШ GMAIL (де зараз sereg)
+      to: ['serega.cv@gmail.com'], // ВПИШІТЬ СЮДИ ВАШ GMAIL (де зараз sereg)
       subject: 'НОВА ЗАЯВКА: Консультація',
       html: `
         <h2>Нова заявка з сайту reabilitacia.cv.ua</h2>
