@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
 
 export function ContactForm({ content }: { content: any }) {
   const [status, setStatus] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // Додаємо стан завантаження
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +24,9 @@ export function ContactForm({ content }: { content: any }) {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setStatus("Дякуємо! Ми зв'яжемося з вами найближчим часом.");
       } else {
         setStatus("Сталася помилка. Спробуйте ще раз або зателефонуйте нам.");
@@ -51,26 +54,36 @@ export function ContactForm({ content }: { content: any }) {
           {status ? (
             <div className={`p-6 rounded-2xl text-center font-bold ${status.includes('Дякуємо') ? 'bg-teal-100 text-teal-800' : 'bg-red-100 text-red-800'}`}>
               {status}
+              <button 
+                onClick={() => setStatus(null)} 
+                className="block mx-auto mt-4 text-sm underline opacity-70"
+              >
+                Надіслати ще раз
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <input 
-                name="name" // Обов'язково додаємо name
+                name="name"
                 type="text" 
                 placeholder="Ваше ім'я" 
                 required 
                 className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" 
               />
-              <input 
-                name="phone" // Обов'язково додаємо name
-                type="tel" 
-                placeholder="Номер телефону" 
-                required 
-                className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" 
+              
+              {/* Поле з маскою */}
+              <InputMask
+                mask="+38 (099) 999-99-99"
+                name="phone"
+                type="tel"
+                required
+                placeholder="+38 (0__) ___-__-__"
+                className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black"
               />
+
               <button 
                 type="submit" 
-                disabled={loading} // Вимикаємо кнопку під час відправки
+                disabled={loading}
                 className={`md:col-span-2 py-5 text-white font-bold rounded-2xl shadow-lg transition-all ${loading ? 'bg-gray-400' : 'bg-teal-600 hover:bg-teal-700'}`}
               >
                 {loading ? "Відправляємо..." : buttonText}
