@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     // Відправка листа через Resend
     const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev', // Поки що залишаємо цей, він найнадійніший для тесту
-      to: ['serega.cv@gmail.com'], // Ваша пошта
+      to: ['gt.workfiles@gmail.com'], // Ваша пошта
       subject: `Заявка: ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 20px; border-radius: 10px;">
