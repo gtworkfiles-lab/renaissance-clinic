@@ -1,39 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import ClientBody from "./ClientBody";
-import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
-  title: "Renaissance Clinic - Official Site",
-  description: "Professional rehabilitation services. Your path to recovery starts here.",
+  title: 'Ренесанс Центр Чернівці | Лікування алкоголізму та наркоманії',
+  description: 'Ренесанс Центр — провідний реабілітаційний центр у Чернівцях. Ефективне лікування алкоголізму, наркоманії, ігроманії та професійна детоксикація. Анонімна допомога 24/7.',
+  keywords: 'Ренесанс Центр Чернівці, лікування алкоголізму Чернівці, лікування наркоманії Чернівці, лікування ігроманії Чернівці, виведення із запою Чернівці, детоксикація Чернівці, реабілітаційний центр',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <head>
-        <Script
-          crossOrigin="anonymous"
-          src="//unpkg.com/same-runtime/dist/index.global.js"
-        />
-      </head>
-      <body suppressHydrationWarning className="antialiased">
-        <ClientBody>{children}</ClientBody>
+    <html lang="uk">
+      <body className={inter.className}>
+        {children}
       </body>
     </html>
   );
