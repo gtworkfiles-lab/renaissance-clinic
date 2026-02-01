@@ -14,6 +14,11 @@ export function Navigation({ menuItems, metadata }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
+  // Додаємо жорстку перевірку: якщо metadata.siteName містить Clinic або порожній - ставимо Ренесанс Центр
+  const displaySiteName = !metadata?.siteName || metadata.siteName.includes("Clinic") 
+    ? "Ренесанс Центр" 
+    : metadata.siteName;
+
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,7 +26,7 @@ export function Navigation({ menuItems, metadata }: NavigationProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-white drop-shadow-lg">
-              {metadata.siteName}
+              {displaySiteName}
             </span>
           </Link>
 
