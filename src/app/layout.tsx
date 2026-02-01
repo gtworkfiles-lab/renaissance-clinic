@@ -1,39 +1,38 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import ClientBody from "./ClientBody";
-import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
-  title: "Renaissance Clinic - Official Site",
-  description: "Professional rehabilitation services. Your path to recovery starts here.",
+  title: 'Ренесанс Центр Чернівці | Лікування алкоголізму та наркоманії',
+  description: 'Ренесанс Центр — провідний реабілітаційний центр у Чернівцях. Ефективне лікування алкоголізму, наркоманії, ігроманії та професійна детоксикація. Анонімна допомога 24/7. Телефонуйте зараз!',
+  keywords: 'Ренесанс Центр Чернівці, лікування алкоголізму Чернівці, лікування наркоманії Чернівці, лікування ігроманії Чернівці, виведення із запою Чернівці, детоксикація, реабілітаційний центр Чернівці',
+  openGraph: {
+    title: 'Ренесанс Центр Чернівці — Повернення до тверезого життя',
+    description: 'Комплексна реабілітація залежних у Чернівцях. Кваліфікована допомога, комфортні умови та гарантована анонімність.',
+    type: 'website',
+    locale: 'uk_UA',
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="uk">
       <head>
-        <Script
-          crossOrigin="anonymous"
-          src="//unpkg.com/same-runtime/dist/index.global.js"
-        />
+        <style>{`
+          /* Приховуємо кнопку дзвінка на десктопах */
+          @media (min-width: 1024px) {
+            .mobile-call-button { display: none !important; }
+          }
+        `}</style>
       </head>
-      <body suppressHydrationWarning className="antialiased">
-        <ClientBody>{children}</ClientBody>
+      <body className={inter.className}>
+        {children}
       </body>
     </html>
   );
