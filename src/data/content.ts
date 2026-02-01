@@ -58,6 +58,6 @@ export const siteContent: SiteContent = {
   contact: {
     phone: "+38 (068) 420 94 40",
     email: "maxrenes2020@gmail.com",
-    address: "м. Чернівці, вул. Хутірська, 23а",
+    address: "м. Чернівці, вул. Хутірська, 23 а",
   },
 };
