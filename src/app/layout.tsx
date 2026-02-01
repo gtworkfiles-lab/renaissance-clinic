@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ScrollToTop from "@/components/ScrollToTop"; // Імпортуємо стрілку
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -16,9 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="uk">
+    <html lang="uk" className="scroll-smooth">
       <body className={inter.className}>
         {children}
+        <ScrollToTop /> {/* Додаємо стрілку сюди */}
       </body>
     </html>
   );
