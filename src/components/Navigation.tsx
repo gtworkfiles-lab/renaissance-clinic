@@ -10,12 +10,9 @@ interface NavigationProps {
   metadata: SiteMetadata;
 }
 
-export function Navigation({ menuItems = [], metadata }: NavigationProps) {
+export function Navigation({ menuItems, metadata }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  // Захист від порожніх даних
-  const siteName = metadata?.siteName || "Ренесанс Центр";
 
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 bg-transparent">
@@ -24,13 +21,13 @@ export function Navigation({ menuItems = [], metadata }: NavigationProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-white drop-shadow-lg">
-              {siteName}
+              {metadata.siteName}
             </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">
-            {menuItems?.map((item) => (
+            {menuItems.map((item) => (
               <div 
                 key={item.id || item.label} 
                 className="relative group"
@@ -47,7 +44,7 @@ export function Navigation({ menuItems = [], metadata }: NavigationProps) {
                   </button>
                 ) : (
                   <Link
-                    href={item.href || "#"}
+                    href={item.href}
                     className="px-4 py-2 text-white/90 hover:text-white font-medium transition-colors drop-shadow-md"
                     target={item.isExternal ? "_blank" : undefined}
                     rel={item.isExternal ? "noopener noreferrer" : undefined}
@@ -68,7 +65,7 @@ export function Navigation({ menuItems = [], metadata }: NavigationProps) {
                     {item.children.map((child) => (
                       <Link
                         key={child.id || child.label}
-                        href={child.href || "#"}
+                        href={child.href}
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-teal-600 transition-colors"
                       >
                         {child.label}
@@ -99,10 +96,10 @@ export function Navigation({ menuItems = [], metadata }: NavigationProps) {
         }`}
       >
         <div className="px-4 py-4 space-y-2">
-          {menuItems?.map((item) => (
+          {menuItems.map((item) => (
             <div key={`mobile-${item.id || item.label}`}>
               <Link
-                href={item.href || "#"}
+                href={item.href}
                 className="block px-4 py-3 text-gray-800 hover:bg-teal-50 hover:text-teal-600 rounded-lg font-medium transition-colors"
                 onClick={() => setIsOpen(false)}
               >
@@ -113,7 +110,7 @@ export function Navigation({ menuItems = [], metadata }: NavigationProps) {
                   {item.children.map((child) => (
                     <Link
                       key={`mobile-child-${child.id || child.label}`}
-                      href={child.href || "#"}
+                      href={child.href}
                       className="block px-4 py-2 text-gray-600 hover:bg-teal-50 hover:text-teal-600 rounded-lg transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
