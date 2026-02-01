@@ -14,25 +14,20 @@ export function Navigation({ menuItems, metadata }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  // Додаємо жорстку перевірку: якщо metadata.siteName містить Clinic або порожній - ставимо Ренесанс Центр
-  const displaySiteName = !metadata?.siteName || metadata.siteName.includes("Clinic") 
-    ? "Ренесанс Центр" 
-    : metadata.siteName;
-
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Logo - Жорстко прописана назва для обходу будь-якого кешу */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-white drop-shadow-lg">
-              {displaySiteName}
+              Ренесанс Центр
             </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">
-            {menuItems.map((item) => (
+            {menuItems && menuItems.map((item) => (
               <div 
                 key={item.id || item.label} 
                 className="relative group"
@@ -101,7 +96,7 @@ export function Navigation({ menuItems, metadata }: NavigationProps) {
         }`}
       >
         <div className="px-4 py-4 space-y-2">
-          {menuItems.map((item) => (
+          {menuItems && menuItems.map((item) => (
             <div key={`mobile-${item.id || item.label}`}>
               <Link
                 href={item.href}
