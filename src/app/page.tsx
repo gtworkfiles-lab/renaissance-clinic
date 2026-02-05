@@ -20,14 +20,25 @@ export default function Home() {
 
   useEffect(() => {
     getContent().then(data => {
-      if (data && data.faq) {
-        data.faq = data.faq.map((item: any) => 
-          item.question.includes("триває курс") 
-            ? { ...item, answer: "Рекомендований курс для стабільного результату і відновлення — від 3 місяців." }
-            : item
-        );
+      if (data) {
+        // Крок №2: Оновлення тексту кнопок та заголовків для маркетингового упору
+        if (data.hero) {
+          data.hero.title = "Лікування алкоголізму та наркоманії у Чернівцях";
+          data.hero.subtitle = "Анонімна допомога 24/7. Отримайте безкоштовну консультацію нарколога прямо зараз. Понад 15 років досвіду.";
+          if (data.hero.ctaButton) {
+            data.hero.ctaButton.label = "Безкоштовна консультація";
+          }
+        }
+
+        if (data.faq) {
+          data.faq = data.faq.map((item: any) => 
+            item.question.includes("триває курс") 
+              ? { ...item, answer: "Рекомендований курс для стабільного результату і відновлення — від 3 місяців." }
+              : item
+          );
+        }
+        setContent(data);
       }
-      setContent(data);
     });
   }, []);
 
@@ -65,7 +76,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Наші контакти у Чернівцях</h2>
-            <p className="text-gray-600">Ми працюємо цілодобово для вашої допомоги</p>
+            <p className="text-gray-600">Ми працюємо цілодобово для вашої допомоги. Перша консультація — безкоштовна.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
@@ -73,7 +84,7 @@ export default function Home() {
               <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6">
                 <Phone size={24} />
               </div>
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Телефон</h3>
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Телефон 24/7</h3>
               <a href={`tel:${content.contacts.rawPhone}`} className="text-xl md:text-2xl font-bold text-gray-900 hover:text-red-600 transition-colors mb-8">
                 {content.contacts.phone}
               </a>
