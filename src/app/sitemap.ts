@@ -1,15 +1,35 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://reabilitacia.cv.ua'
+
   return [
     {
-      url: 'https://reabilitacia.cv.ua',
+      url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'always',
       priority: 1,
     },
     {
-      url: 'https://reabilitacia.cv.ua/services', // додайте посилання на ваші основні послуги
+      url: `${baseUrl}/services/alkoholizm`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/narkomania`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/ihromania`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/reabilitaciia`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
