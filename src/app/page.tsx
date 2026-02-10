@@ -12,7 +12,7 @@ import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { ContactForm } from "@/components/ContactForm";
 import { Articles } from "@/components/Articles";
-import Image from "next/image"; // Додано для SVG іконок
+import Image from "next/image";
 import { Phone, Mail, MapPin, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -27,6 +27,7 @@ export default function Home() {
           data.hero.title = "Лікування алкоголізму та наркоманії у Чернівцях";
           data.hero.subtitle = "Анонімна допомога 24/7. Отримайте безкоштовну консультацію нарколога прямо зараз. Понад 15 років досвіду.";
           if (data.hero.ctaButton) {
+            // Встановлюємо новий текст кнопки
             data.hero.ctaButton.label = "Безкоштовна консультація";
           }
         }
@@ -55,7 +56,6 @@ export default function Home() {
       <div className="relative">
         {content.hero && <Hero content={content.hero} />}
         
-        {/* ОНОВЛЕНО: Кольорові іконки у Hero */}
         <div className="flex flex-col items-center justify-center -mt-12 md:-mt-20 mb-12 relative z-10">
           <p className="text-white/80 text-sm mb-4 font-medium drop-shadow-md uppercase tracking-wider">Безкоштовна консультація у месенджерах:</p>
           <div className="flex gap-5">
@@ -89,7 +89,6 @@ export default function Home() {
       <FamilyHelp content={content.helpForFamily} />
       <ContactForm content={content.form} />
 
-      {/* ОНОВЛЕНО: Секція контактів з новими іконками */}
       <section id="contacts" className="py-20 md:py-24 px-4 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-16">Наші контакти у Чернівцях</h2>
