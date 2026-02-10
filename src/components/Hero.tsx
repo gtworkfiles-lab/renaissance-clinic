@@ -6,11 +6,7 @@ interface HeroProps {
   content: {
     title: string;
     subtitle?: string;
-    // Виправляємо структуру об'єкта під ваші дані в content.ts
-    ctaButton: {
-      label: string;
-      href: string;
-    };
+    cta: string;
     backgroundImage?: string;
   };
 }
@@ -25,6 +21,7 @@ export function Hero({ content }: HeroProps) {
           backgroundImage: `url('${content.backgroundImage}')`,
         }}
       >
+        {/* Затемнення фону (Overlay) як на скриншоті */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
       </div>
 
@@ -45,14 +42,13 @@ export function Hero({ content }: HeroProps) {
             onClick={() => document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' })}
             className="group relative px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md text-white rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl"
           >
-            {/* ВИПРАВЛЕНО: тепер беремо label з об'єкта ctaButton */}
-            {content.ctaButton.label}
+            {content.cta}
             <span className="absolute inset-0 rounded-full bg-white/5 blur-xl group-hover:bg-white/10 transition-colors" />
           </button>
         </div>
       </div>
 
-      {/* Ефект градієнта знизу */}
+      {/* Ефект градієнта знизу для плавного переходу до наступного блоку */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent z-10" />
     </section>
   );
