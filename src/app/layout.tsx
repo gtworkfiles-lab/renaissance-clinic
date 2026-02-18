@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
-  // Короткий і потужний заголовок для Google та вкладки браузера
+  // ФІКС КАНOНІЧНОЇ ВЕРСІЇ: Вказуємо основний домен
+  metadataBase: new URL("https://reabilitacia.cv.ua"),
+  alternates: {
+    canonical: "/",
+  },
   title: "Лікування алкоголізму, наркоманії, ігроманії | Чернівці | Ренесанс",
   description: "Ренесанс Центр Чернівці: професійне лікування алкоголізму, наркоманії та ігроманії (лудоманії). Анонімна допомога, детоксикація та реабілітація 24/7.",
   keywords: [
@@ -24,7 +29,6 @@ export const metadata: Metadata = {
     apple: "/icon.png",
   },
   openGraph: {
-    // Солідне представлення у месенджерах (Telegram/Viber)
     title: "Лікування залежностей у Чернівцях — Ренесанс Центр",
     description: "Професійна допомога: алкоголізм, наркоманія, ігроманія. Безкоштовна консультація. Анонімно та цілодобово.",
     url: "https://reabilitacia.cv.ua",
@@ -51,6 +55,27 @@ export default function RootLayout({
     <html lang="uk">
       <head>
         <link rel="icon" href="/icon.png" type="image/png" />
+        
+        {/* GOOGLE ANALYTICS (GA4) - Замініть G-XXXXXXXXXX на ваш ID, коли отримаєте */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XXXXXXXXXX', {
+                page_path: window.location.pathname,
+              });
+              // Сюди ж додамо код Google Ads пізніше
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
