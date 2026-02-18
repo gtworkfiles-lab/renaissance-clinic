@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', <-- МИ ЦЕ ВИДАЛИЛИ, щоб працювала відправка листів
-
+  // Налаштування зображень
   images: {
-    // unoptimized можна залишити true або видалити, Vercel підтримує оптимізацію
     unoptimized: true, 
     remotePatterns: [
       {
@@ -13,14 +11,33 @@ const nextConfig = {
     ],
   },
 
+  // Ігнорування помилок для успішного білду
   typescript: {
-    // Ігноруємо помилки TypeScript, щоб білд пройшов без затримок
     ignoreBuildErrors: true,
   },
-
   eslint: {
-    // Ігноруємо помилки лінтера для швидкості білду
     ignoreDuringBuilds: true,
+  },
+
+  // ФІКС 404 ПОМИЛОК: Додаємо автоматичні перенаправлення
+  async redirects() {
+    return [
+      {
+        source: '/services/alkoholizm',
+        destination: '/services/alcohol-treatment',
+        permanent: true,
+      },
+      {
+        source: '/services/ihromania',
+        destination: '/services/gambling-treatment',
+        permanent: true,
+      },
+      {
+        source: '/dim',
+        destination: '/',
+        permanent: true,
+      },
+    ];
   },
 };
 
