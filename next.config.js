@@ -1,28 +1,32 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // Залишаємо unoptimized: true, якщо ви використовуєте статичний експорт або прості зображення
     unoptimized: true, 
-    // remotePatterns видалено, бо Sanity більше не використовується
   },
 
   typescript: {
-    // Ігноруємо помилки TypeScript для стабільного білду
     ignoreBuildErrors: true,
   },
   eslint: {
-    // Ігноруємо помилки лінтера
     ignoreDuringBuilds: true,
   },
 
   async redirects() {
     return [
       {
+        // 1. Направляємо старе посилання з Google Search Console
         source: '/services/alkoholizm',
         destination: '/services/likuvannya-alkogolizmu',
         permanent: true,
       },
       {
+        // 2. Направляємо посилання, яке у вас зараз видає 404 на скріншотах
+        source: '/services/alcohol-treatment',
+        destination: '/services/likuvannya-alkogolizmu',
+        permanent: true,
+      },
+      {
+        // 3. Направляємо ігроманію (перевірте, чи робоча сторінка має такий URL)
         source: '/services/ihromania',
         destination: '/services/gambling-treatment', 
         permanent: true,
