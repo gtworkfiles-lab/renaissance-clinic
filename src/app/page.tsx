@@ -23,12 +23,17 @@ export default function Home() {
   useEffect(() => {
     getContent().then(data => {
       if (data) {
+        // Оновлюємо тексти для Hero анонімно, щоб не ламати структуру
         if (data.hero) {
           data.hero.title = "Лікування алкоголізму та наркоманії у Чернівцях";
           data.hero.subtitle = "Анонімна допомога 24/7. Отримайте безкоштовну консультацію нарколога прямо зараз. Понад 15 років досвіду.";
+          
+          // ФІКС: Перевіряємо обидва можливі варіанти назви поля кнопки
           if (data.hero.ctaButton) {
-            // Встановлюємо новий текст кнопки
             data.hero.ctaButton.label = "Безкоштовна консультація";
+          }
+          if (data.hero.cta) {
+            data.hero.cta = "Безкоштовна консультація";
           }
         }
         setContent(data);
