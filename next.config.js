@@ -1,35 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Зберігаємо ваші налаштування зображень
   images: {
+    // Залишаємо unoptimized: true, якщо ви використовуєте статичний експорт або прості зображення
     unoptimized: true, 
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-    ],
+    // remotePatterns видалено, бо Sanity більше не використовується
   },
 
-  // Зберігаємо ігнорування помилок для успішного білду
   typescript: {
+    // Ігноруємо помилки TypeScript для стабільного білду
     ignoreBuildErrors: true,
   },
   eslint: {
+    // Ігноруємо помилки лінтера
     ignoreDuringBuilds: true,
   },
 
-  // ФІКС 404 ПОМИЛОК: Додаємо автоматичні перенаправлення
   async redirects() {
     return [
       {
         source: '/services/alkoholizm',
-        destination: '/services/alcohol-treatment',
+        destination: '/services/likuvannya-alkogolizmu',
         permanent: true,
       },
       {
         source: '/services/ihromania',
-        destination: '/services/gambling-treatment',
+        destination: '/services/gambling-treatment', 
         permanent: true,
       },
       {
