@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Налаштування зображень
+  // Зберігаємо ваші налаштування зображень
   images: {
     unoptimized: true, 
     remotePatterns: [
@@ -11,7 +11,7 @@ const nextConfig = {
     ],
   },
 
-  // Ігнорування помилок для успішного білду
+  // Зберігаємо ігнорування помилок для успішного білду
   typescript: {
     ignoreBuildErrors: true,
   },
