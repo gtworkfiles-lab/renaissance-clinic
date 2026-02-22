@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { PatternFormat } from 'react-number-format'; // Нова бібліотека
+import { PatternFormat } from 'react-number-format';
 
 export function ContactForm({ content }: { content: any }) {
   const [status, setStatus] = useState<string | null>(null);
@@ -28,6 +28,15 @@ export function ContactForm({ content }: { content: any }) {
 
       if (response.ok && result.success) {
         setStatus("Дякуємо! Ми зв'яжемося з вами найближчим часом.");
+        
+        // ВІДСТЕЖЕННЯ УСПІШНОЇ ФОРМИ
+        if (typeof window !== "undefined" && (window as any).gtag) {
+          (window as any).gtag("event", "generate_lead", {
+            event_category: "Form",
+            event_label: "Callback Form Success",
+          });
+        }
+
       } else {
         setStatus("Сталася помилка. Спробуйте ще раз.");
       }
@@ -54,29 +63,9 @@ export function ContactForm({ content }: { content: any }) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="name"
-                type="text" 
-                placeholder="Ваше ім'я" 
-                required 
-                className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" 
-              />
-              
-              {/* НОВА МАСКА ТУТ */}
-              <PatternFormat
-                format="+38 (0##) ### ## ##"
-                allowEmptyFormatting
-                mask="_"
-                name="phone"
-                required
-                className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black"
-              />
-
-              <button 
-                type="submit" 
-                disabled={loading}
-                className={`md:col-span-2 py-5 text-white font-bold rounded-2xl shadow-lg transition-all ${loading ? 'bg-gray-400' : 'bg-teal-600 hover:bg-teal-700'}`}
-              >
+              <input name="name" type="text" placeholder="Ваше ім'я" required className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" />
+              <PatternFormat format="+38 (0##) ### ## ##" allowEmptyFormatting mask="_" name="phone" required className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-teal-600 outline-none transition-all text-black" />
+              <button type="submit" disabled={loading} className={`md:col-span-2 py-5 text-white font-bold rounded-2xl shadow-lg transition-all ${loading ? 'bg-gray-400' : 'bg-teal-600 hover:bg-teal-700'}`}>
                 {loading ? "Відправляємо..." : content?.buttonText || "Замовити консультацію"}
               </button>
             </form>
