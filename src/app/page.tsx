@@ -12,11 +12,10 @@ import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { ContactForm } from "@/components/ContactForm";
 import { Articles } from "@/components/Articles";
-import Image from "image_generation/image_edit"; // Render normally as Image
+import Image from "next/image";
 import { Phone, Mail, MapPin, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// Функція для відправки подій в GA4
 const trackGAEvent = (action: string, label: string) => {
   if (typeof window !== "undefined" && (window as any).gtag) {
     (window as any).gtag("event", action, {
@@ -36,8 +35,6 @@ export default function Home() {
         if (data.hero) {
           data.hero.title = "Лікування алкоголізму та наркоманії у Чернівцях";
           data.hero.subtitle = "Анонімна допомога 24/7. Отримайте безкоштовну консультацію нарколога прямо зараз. Понад 15 років досвіду.";
-          if (data.hero.ctaButton) data.hero.ctaButton.label = "Безкоштовна консультація";
-          if (data.hero.cta) data.hero.cta = "Безкоштовна консультація";
         }
         setContent(data);
       }
@@ -59,17 +56,15 @@ export default function Home() {
       <div className="relative">
         {content.hero && <Hero content={content.hero} />}
         
+        {/* Кнопки месенджерів під Hero */}
         <div className="flex flex-col items-center justify-center -mt-12 md:-mt-20 mb-12 relative z-10">
-          <p className="text-white/80 text-sm mb-4 font-medium drop-shadow-md uppercase tracking-wider">Безкоштовна консультація у месенджерах:</p>
+          <p className="text-white/80 text-sm mb-4 font-medium drop-shadow-md uppercase tracking-wider">Безкоштовна консультація:</p>
           <div className="flex gap-5">
-            <a href={content.contacts.socials.viber} onClick={() => trackGAEvent("click_viber", "Hero Section")} className="hover:scale-110 transition-transform">
+            <a href={content.contacts.socials.viber} onClick={() => trackGAEvent("click_viber", "Hero")} className="hover:scale-110 transition-transform">
                <Image src="/icons/round viber-color-svgrepo-com.svg" alt="Viber" width={56} height={56} className="shadow-xl rounded-full bg-white p-0.5" />
             </a>
-            <a href={content.contacts.socials.telegram} onClick={() => trackGAEvent("click_telegram", "Hero Section")} className="hover:scale-110 transition-transform">
+            <a href={content.contacts.socials.telegram} onClick={() => trackGAEvent("click_telegram", "Hero")} className="hover:scale-110 transition-transform">
                <Image src="/icons/round telegram-svgrepo-com.svg" alt="Telegram" width={56} height={56} className="shadow-xl rounded-full bg-white p-0.5" />
-            </a>
-            <a href={content.contacts.socials.whatsapp} onClick={() => trackGAEvent("click_whatsapp", "Hero Section")} className="hover:scale-110 transition-transform">
-               <Image src="/icons/round whatsapp-svgrepo-com.svg" alt="WhatsApp" width={56} height={56} className="shadow-xl rounded-full bg-white p-0.5" />
             </a>
           </div>
         </div>
@@ -81,61 +76,46 @@ export default function Home() {
       
       <section id="conditions"><Gallery items={content.gallery} /></section>
       <section id="reviews"><Reviews items={content.reviews} /></section>
-
       <Articles items={content.articles} />
       <FAQ items={content.faq} />
       <FamilyHelp content={content.helpForFamily} />
       <ContactForm content={content.form} />
 
-      <section id="contacts" className="py-20 md:py-24 px-4 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-16">Наші контакти у Чернівцях</h2>
+      <section id="contacts" className="py-20 bg-gray-50 border-t">
+        <div className="max-w-7xl mx-auto text-center px-4">
+            <h2 className="text-3xl font-bold mb-16">Наші контакти</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="p-10 bg-white rounded-[40px] shadow-sm border border-gray-100 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6"><Phone size={24} /></div>
-                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Цілодобово</h3>
-                    <a href={`tel:${content.contacts.rawPhone}`} onClick={() => trackGAEvent("click_phone", "Contacts Section")} className="text-2xl font-bold text-gray-900 hover:text-red-600 transition-colors mb-8 tracking-tighter">{content.contacts.phone}</a>
-                    <div className="flex gap-4">
-                        <a href={content.contacts.socials.viber} onClick={() => trackGAEvent("click_viber", "Contacts Card")} className="hover:scale-110 transition-transform">
-                            <Image src="/icons/round viber-color-svgrepo-com.svg" alt="Viber" width={42} height={42} />
-                        </a>
-                        <a href={content.contacts.socials.telegram} onClick={() => trackGAEvent("click_telegram", "Contacts Card")} className="hover:scale-110 transition-transform">
-                            <Image src="/icons/round telegram-svgrepo-com.svg" alt="Telegram" width={42} height={42} />
-                        </a>
-                        <a href={content.contacts.socials.whatsapp} onClick={() => trackGAEvent("click_whatsapp", "Contacts Card")} className="hover:scale-110 transition-transform">
-                            <Image src="/icons/round whatsapp-svgrepo-com.svg" alt="WhatsApp" width={42} height={42} />
-                        </a>
-                    </div>
+                <div className="p-10 bg-white rounded-[40px] shadow-sm flex flex-col items-center">
+                    <Phone className="text-teal-600 mb-6" size={32} />
+                    <a href={`tel:${content.contacts.rawPhone}`} onClick={() => trackGAEvent("click_phone", "Contacts Page")} className="text-2xl font-bold hover:text-red-600 transition-colors">{content.contacts.phone}</a>
                 </div>
-                <div className="p-10 bg-white rounded-[40px] shadow-sm border border-gray-100 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6"><Mail size={24} /></div>
-                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Email</h3>
-                    <a href={`mailto:${content.contacts.email}`} className="text-lg font-semibold text-gray-900">{content.contacts.email}</a>
+                <div className="p-10 bg-white rounded-[40px] shadow-sm flex flex-col items-center">
+                    <Mail className="text-teal-600 mb-6" size={32} />
+                    <p className="text-lg font-semibold">{content.contacts.email}</p>
                 </div>
-                <div className="p-10 bg-white rounded-[40px] shadow-sm border border-gray-100 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6"><MapPin size={24} /></div>
-                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Адреса</h3>
-                    <p className="text-lg font-semibold text-gray-900 leading-relaxed">{content.contacts.address}</p>
+                <div className="p-10 bg-white rounded-[40px] shadow-sm flex flex-col items-center">
+                    <MapPin className="text-teal-600 mb-6" size={32} />
+                    <p className="text-lg font-semibold">{content.contacts.address}</p>
                 </div>
             </div>
         </div>
       </section>
 
-      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[9999] flex flex-col gap-4">
-        <button onClick={scrollToTop} className={`p-4 bg-white text-gray-600 rounded-full shadow-lg border border-gray-100 transition-all duration-300 ${showScrollTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"} hover:bg-gray-50 active:scale-95`}><ChevronUp size={24} /></button>
+      {/* Плаваючі кнопки */}
+      <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-4">
+        <button onClick={scrollToTop} className={`p-4 bg-white rounded-full shadow-lg transition-all ${showScrollTop ? "opacity-100" : "opacity-0 pointer-events-none"}`}><ChevronUp /></button>
 
-        {/* Фікс трубки: md:hidden приховає її на десктопах */}
+        {/* ЧЕРВОНА ТРУБКА: md:hidden приховує на десктопі */}
         <a 
           href={`tel:${content.contacts.rawPhone}`}
           onClick={() => trackGAEvent("click_phone", "Floating Button")}
-          className="md:hidden p-5 bg-red-600 text-white rounded-full shadow-[0_10px_25px_rgba(220,38,38,0.4)] hover:scale-110 active:scale-95 transition-all flex items-center justify-center group relative"
+          className="md:hidden p-5 bg-red-600 text-white rounded-full shadow-2xl animate-bounce"
         >
-          <span className="absolute inset-0 rounded-full bg-red-600 animate-ping opacity-25 group-hover:hidden"></span>
-          <Phone size={32} fill="currentColor" className="relative z-10 animate-pulse" />
+          <Phone size={32} fill="currentColor" />
         </a>
       </div>
 
-      <footer className="py-10 text-center text-gray-400 text-sm bg-gray-50 border-t border-gray-100">&copy; {new Date().getFullYear()} Ренесанс Центр</footer>
+      <footer className="py-10 text-center text-gray-400 text-sm bg-gray-50 border-t">&copy; {new Date().getFullYear()} Ренесанс Центр</footer>
     </main>
   );
 }
