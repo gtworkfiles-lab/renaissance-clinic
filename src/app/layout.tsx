@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Script from "next/script"; // Імпортуємо компонент для скриптів
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="uk" className="scroll-smooth">
       <head>
-        {/* Google Analytics */}
+        {/* Google Tag Manager (Analytics + Ads) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-J6R5ZMVKKB"
           strategy="afterInteractive"
@@ -28,7 +28,12 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+
+            // Існуюча аналітика
             gtag('config', 'G-J6R5ZMVKKB');
+
+            // Новий рекламний акаунт Google Ads
+            gtag('config', 'AW-17988300072');
           `}
         </Script>
       </head>
