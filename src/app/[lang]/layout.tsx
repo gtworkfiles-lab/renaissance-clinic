@@ -1,48 +1,55 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./../globals.css"; 
 import Script from "next/script";
-import { getContent } from "@/lib/cms";
+import { getContent, Locale } from "@/lib/cms";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const content = await getContent();
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { lang: string } 
+}): Promise<Metadata> {
+  const content = await getContent(params.lang as Locale);
   return {
     title: content.metadata.siteName,
     description: content.metadata.siteDescription,
+    alternates: {
+      canonical: `https://reabilitacia.cv.ua/${params.lang}`,
+      languages: {
+        'uk-UA': '/ua',
+        'ru-RU': '/ru',
+        'en-US': '/en',
+      },
+    },
   };
 }
 
 export default async function RootLayout({
   children,
+  params
 }: {
   children: React.ReactNode;
+  params: { lang: string };
 }) {
-  const content = await getContent();
+  const content = await getContent(params.lang as Locale);
 
-  // Це і є розмітка для Sitelinks
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": content.metadata.siteName,
-    "url": "https://reabilitacia.cv.ua",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://reabilitacia.cv.ua/#services",
-      "query-input": "required name=search_term_string"
-    },
+    "url": `https://reabilitacia.cv.ua/${params.lang}`,
     "hasPart": content.navigation.menuItems.map((item: any) => ({
       "@type": "WebPage",
       "name": item.label,
-      "url": `https://reabilitacia.cv.ua/${item.href}`
+      "url": `https://reabilitacia.cv.ua/${params.lang}${item.href}`
     }))
   };
 
   return (
-    <html lang="uk" className="scroll-smooth">
+    <html lang={params.lang} className="scroll-smooth">
       <head>
-        {/* Додаємо розмітку для Google Sitelinks */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
