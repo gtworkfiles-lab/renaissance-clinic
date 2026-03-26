@@ -16,7 +16,6 @@ import Image from "next/image";
 import { Phone, Mail, MapPin, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// Функція для відправки подій в GA4
 const trackGAEvent = (action: string, label: string) => {
   if (typeof window !== "undefined" && (window as any).gtag) {
     (window as any).gtag("event", action, {
@@ -33,12 +32,7 @@ export default function Home() {
   useEffect(() => {
     getContent().then(data => {
       if (data) {
-        if (data.hero) {
-          data.hero.title = "Лікування алкоголізму та наркоманії у Чернівцях";
-          data.hero.subtitle = "Анонімна допомога 24/7. Отримайте безкоштовну консультацію нарколога прямо зараз. Понад 15 років досвіду.";
-          if (data.hero.ctaButton) data.hero.ctaButton.label = "Безкоштовна консультація";
-          if (data.hero.cta) data.hero.cta = "Безкоштовна консультація";
-        }
+        // Прибрано хардкод заголовків, тепер дані беруться чисто з cms.ts
         setContent(data);
       }
     });
@@ -134,7 +128,7 @@ export default function Home() {
         </a>
       </div>
 
-      <footer className="py-10 text-center text-gray-400 text-sm bg-gray-50 border-t border-gray-100">&copy; {new Date().getFullYear()} Ренесанс Центр</footer>
+      <footer className="py-10 text-center text-gray-400 text-sm bg-gray-50 border-t border-gray-100">&copy; {new Date().getFullYear()} {content.metadata.siteName}</footer>
     </main>
   );
 }
